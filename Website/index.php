@@ -46,7 +46,7 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
+						<li class="active"><a href="/">Home</a></li>
 						<!--<li><a href="#about">About</a></li>
 						<li><a href="#contact">Contact</a></li>
 						<li class="dropdown">
@@ -95,7 +95,7 @@
 						of years you've had your current loan, if you don't have a current loan, please enter a zero.</p><br />
 						<div class="row">
 						    <div class="col-md-2 col-md-offset-5">
-								<input type="number" class="form-control" id="loan-years" placeholder="Years" min="0" />
+								<input type="number" class="form-control" id="loan-years" placeholder="Years" min="0" required />
 						    </div>
 						</div>
 					</div>
@@ -114,27 +114,9 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-muted">Place sticky footer content here.</p>
+				<p class="text-muted">A project by Shane Reeves and Cameron Martin.</p>
 			</div>
 		</footer>
-
-		<!-- Error message -->
-		<div class="modal fade" id="modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title">Modal title</h4>
-					</div>
-					<div class="modal-body">
-						<p>One fine body&hellip;</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
 
 		<!-- Bootstrap core JavaScript
 		================================================== -->

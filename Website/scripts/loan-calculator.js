@@ -2,6 +2,7 @@ var currentStep = 1, steps = null, progressBar = null, previousButton = null, ne
 
 function validateInput() {
 	$("main-form").submit();
+
 	switch (currentStep) {
 		case 1:
 			if (!$("#borrow-amount")[0].checkValidity() || $("#borrow-amount")[0].value <= 0) {
@@ -15,12 +16,12 @@ function validateInput() {
 			}
 		break;
 		case 2:
-			if (!$("#loan-years")[0].checkValidity() || $("#loan-years")[0].value <= 0) {
+			if (!$("#loan-years")[0].checkValidity() || $("#loan-years")[0].value < 0 || $("#loan-years")[0].value == "") {
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_DANGER,
 					title: 'Error',
-		            message: 'Please enter a valid number representing how many years you have had the loan.'
-		        });
+					message: 'Please enter a valid number representing how many years you have had the loan.'
+				});
 
 		        return false;
 			}
@@ -28,7 +29,7 @@ function validateInput() {
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_SUCCESS,
 					title: 'Success',
-		            message: 'Successfully completed the form!'
+					message: 'Successfully completed the form!'
 		        });
 			}
 		break;
@@ -59,13 +60,14 @@ function updateProgress() {
 function goToStep(stepNumber) {
 	$(steps[currentStep - 1]).fadeOut(200, function() {
 		$(steps[stepNumber - 1]).fadeIn(200);
+		currentStep = stepNumber;
+		updateProgress();
 	});
 }
 
 function previous() {
 	if (currentStep > 1) {
 		goToStep(currentStep - 1);
-		currentStep--;
 	}
 
 	updateProgress();
@@ -74,10 +76,7 @@ function previous() {
 function next() {
 	if (validateInput() && currentStep < steps.length) {
 		goToStep(currentStep + 1);
-		currentStep++;
 	}
-
-	updateProgress();
 }
 
 function prepare() {
