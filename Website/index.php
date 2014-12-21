@@ -17,6 +17,7 @@
 		<!-- Custom styles for this template -->
 		<link href="/styles/sticky-footer-navbar.css" rel="stylesheet">
 		<link href="/styles/theme.css" rel="stylesheet">
+		<link href="/styles/bootstrap-dialog.css" rel="stylesheet">
 
 		<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 		<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -67,46 +68,48 @@
 
 		<!-- Begin page content -->
 		<div class="container">
-			<div id="form-steps">
-				<div class="form-step">
-					<div class="page-header">
-						<h1>How much would you like to borrow?</h1>
+			<form id="main-form" action="" method="post" onsubmit="validateInput()">
+				<div id="form-steps">
+					<div class="form-step">
+						<div class="page-header">
+							<h1>How much would you like to borrow?</h1>
+						</div>
+						<p>This is the total amount you'd like to borrow. If you need $500,000, that is the number you enter (without the "$"). If you have an existing loan, 
+						please enter the amount you borrowed at the very begining of your loan, this calculator will determine your remaining present value behind the scenes and give you 
+						a meaningful result if you change your payment amount or interest rate.</p><br />
+						<div class="row">
+						    <div class="col-md-4 col-md-offset-4">
+								<div class="input-group">
+									<span class="input-group-addon">$</span>
+									<input type="number" class="form-control" id="borrow-amount" placeholder="Enter a figure" min="1" required />
+									<span class="input-group-addon">.00</span>
+								</div>
+						    </div>
+						</div>
 					</div>
-					<p>This is the total amount you'd like to borrow. If you need $500,000, that is the number you enter (without the "$"). If you have an existing loan, 
-					please enter the amount you borrowed at the very begining of your loan, this calculator will determine your remaining present value behind the scenes and give you 
-					a meaningful result if you change your payment amount or interest rate.</p><br />
-					<div class="row">
-					    <div class="col-md-4 col-md-offset-4">
-							<div class="input-group">
-								<span class="input-group-addon">$</span>
-								<input type="text" class="form-control">
-								<span class="input-group-addon">.00</span>
-							</div>
-					    </div>
+					<div class="form-step" style="display: none;">
+						<div class="page-header">
+							<h1>How many years have you had the loan for?</h1>
+						</div>
+						<p>If you have an existing loan you can use this calcutor to see how changes in various factors will influence the rest of your loan.<br><br> Please enter the number 
+						of years you've had your current loan, if you don't have a current loan, please enter a zero.</p><br />
+						<div class="row">
+						    <div class="col-md-2 col-md-offset-5">
+								<input type="number" class="form-control" id="loan-years" placeholder="Years" min="0" />
+						    </div>
+						</div>
+					</div>
+				</div><br /><br />
+				<div class="row">
+					<div class="col-md-6 half"><button type="button" class="btn btn-primary btn-large" onclick="previous();" id="previous-button" disabled="true">Previous</button></div>
+					<div class="col-md-6 half" style="text-align: right;"><button type="button" class="btn btn-success btn-large" onclick="next();" id="next-button">Next</button></div>
+				</div><br />
+				<div class="progress">
+					<div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+						<span class="sr-only">0% Complete</span>
 					</div>
 				</div>
-				<div class="form-step" style="display: none;">
-					<div class="page-header">
-						<h1>How many years have you had the loan for?</h1>
-					</div>
-					<p>If you have an existing loan you can use this calcutor to see how changes in various factors will influence the rest of your loan.<br><br> Please enter the number 
-					of years you've had your current loan, if you don't have a current loan, please enter a zero.</p><br />
-					<div class="row">
-					    <div class="col-md-2 col-md-offset-5">
-							<input type="text" class="form-control">
-					    </div>
-					</div>
-				</div>
-			</div><br />
-			<div class="row">
-				<div class="col-md-6"><button type="button" class="btn btn-primary btn-large" onclick="previous();" id="previous-button" disabled="true">Previous</button></div>
-				<div class="col-md-6" style="text-align: right;"><button type="button" class="btn btn-success btn-large" onclick="next();" id="next-button">Next</button></div>
-			</div><br />
-			<div class="progress">
-				<div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-					<span class="sr-only">0% Complete</span>
-				</div>
-			</div>
+			</form>
 		</div>
 
 		<footer class="footer">
@@ -115,16 +118,36 @@
 			</div>
 		</footer>
 
+		<!-- Error message -->
+		<div class="modal fade" id="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						<p>One fine body&hellip;</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/bootstrap/js/bootstrap.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
 
 		<!-- JavaScript for form -->
 		<script src="/scripts/loan-calculator.js" type="text/javascript"></script>
+
+		<!-- Bootstrap Dialog -->
+		<script src="/scripts/bootstrap-dialog.js" type="text/javascript"></script>
 	</body>
 </html>

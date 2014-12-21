@@ -1,11 +1,16 @@
 div.container {
-	width: 800px;
+	max-width: 800px;
 }
 
 #form-steps {
-	height: 300px;
+	min-height: 300px;
 }
 
 .hidden {
 	display: none;
+}
+
+div.row .half  {
+    float: left !important;
+    width: 50%;
 }
